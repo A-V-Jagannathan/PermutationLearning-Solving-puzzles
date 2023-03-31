@@ -229,49 +229,7 @@ def PermutationMatrix(path):
         mats.append(arr)
     y = np.array(mats)
     return y
-def createSubmission(p):
-    import pandas as pd
-    import numpy as np
-    df=pd.read_csv(p)
-    names=df.iloc[:,-2:-1].values.tolist()
-    pos=df.iloc[:,-1:].values.tolist()
-    finall=[]
-    for i in range(0,72):
-        finall.append([])
-    for i in pos:
-        posis=i[0][1:-1].split(", ")
-        for j in range(0,36):
-            finall[j].append(posis[j][1])
-            finall[j+36].append(posis[j][2])
-    newnames=[]
-    for i in names:
-        newnames.append(i[0]+".jpg")
-    newdf=pd.DataFrame()
-    newdf["image"]=newnames
-    indexes=[]
-    for i in range(6):
-        for j in range(6):
-            indexes.append(str(i)+str(j))
-    rc=[]
-    for i in indexes:
-        rc.append("r"+i)
-    for i in indexes:
-        rc.append("c"+i)
-    for j in range(72):
-        newdf[rc[j]]=finall[j]
-    newdf.set_index("image")
-    return newdf
-def posFinder(pred):
-    TotRows=[]
-    for i in pred:
-        rows=[]
-        for j in i:
-            y=maxind(j)
-            r=y//6
-            c=y%6
-            rows.append(str(r)+str(c))
-        TotRows.append(rows)
-    return TotRows
+
 def helpMe():
     print("List of functions availabe to be used:\n\n")
     print('''1.load_images(path,valid_split):\nTakes in 2 parameters, returns 2 numpy arrays, corresponding to training and test set. 
@@ -299,11 +257,14 @@ def helpMe():
     Example usage:\nshowImgarr(arr,300,300)
     
     ''')
-    print('''4.showImgarr(arr,height,width):\nTakes in the array and the final image's height and width as parameter, prints the image version of it. 
+    print('''5.createImage(shuffled,P):\nTakes in the shuffled image array and the predictions from the Model(A permutation matrix)
+    as parameters, returns the final image after reshuffling. 
     
-    used to display the image. pass the output from shuffleAnImage or loadAnImage or any np array resembling it, along with desired
-    height and width of the final image.
-    Example usage:\nshowImgarr(arr,300,300)
+    To see the predicted image , follow the following:
+    Example usage:
+    predictions=model.predict(array)
+    img=showImgarr(shuffled,predictions)
+    showImgarr(img,height,width)
     
     ''')
 
