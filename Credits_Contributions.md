@@ -2,15 +2,15 @@
 
 - A V Jagannathan. (https://github.com/A-V-Jagannathan)
 
-Contributions
+  Contributions
 
-Datahelper, Designing and evaluating model
+  Datahelper, Designing and evaluating model
 
 - Lakshetha T.(https://github.com/lakshethaaa)
 
-Contributions
+  Contributions
 
-Designing and evalyating models, ideation
+  Designing and evalyating models, ideation
 
 ### Research materials
 ### Data credits
