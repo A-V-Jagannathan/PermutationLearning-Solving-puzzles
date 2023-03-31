@@ -1,4 +1,4 @@
-The .py file contains necessary functions that can be used to create data in a suitable format.
+The DataHelper.py file contains necessary functions that can be used to create data in a suitable format.
 
 To use the.py file, 
 - download the DataHelper.py file
