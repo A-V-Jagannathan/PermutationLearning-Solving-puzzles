@@ -1,8 +1,6 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[1]:
-
 def load_images(path,valid_split=0):
     import numpy as np,pandas as pd
     if(valid_split>1 or valid_split<0):
@@ -229,35 +227,72 @@ def PermutationMatrix(path):
         mats.append(arr)
     y = np.array(mats)
     return y
-
+def generatePM(N,n,split=0):
+    import numpy as np
+    if(valid_split>1 or valid_split<0):
+        raise ValueError("Invalid split size")
+    cols=n*[0]
+    matrx=[]
+    for i in range(n):
+        matrx.append(np.array(cols.copy()))
+    for i in range(n):
+        matrx[i][i]=1
+    matrx=np.array(matrx)
+    final=[]
+    for i in range(N):
+        final.append(matrx.copy())
+    final=np.array(final)
+    end=int(final.shape[0]*(1-split)) 
+    return final[:end],final[end:]
 def helpMe():
     print("List of functions availabe to be used:\n\n")
     print('''1.load_images(path,valid_split):\nTakes in 2 parameters, returns 2 numpy arrays, corresponding to training and test set. 
     
     This function is used to load the images as arrays for training and validation.
+    Format for loading images:
+        -> Under path, there must be N folders, each of the folders having the n different splitted pieces of the image
+        -> To generate the suitable format , use CreateDataset function(number 8 in Help) and cut->paste all the folders into a different directory.
     Example usage:\ntrain,test=load_images(\"c:/images/puzzles\",0.2)
     
     ''')
-    print('''2.loadAnImage(path,height,width):\nTakes in 2 parameters, returns a numpy array consisting N*M splitted image. 
+    print('''2.generatePM(N,n,split):\nProduces a (nxn) permutation matrix representing the ground truth for an unshuffled image. 
+    
+    N is the number of images for which permutation matrix has to be generated,
+    n is the total number of pieces(square board)
+    split is ratio between training and test set
+    Example usage:\ny_train,y_test=generatePM(train.shape[0]+test.shape[0], 36, 0.2)
+    
+    ''')
+    print('''3.AugmentedData(x,y,number,augments_per_image=8):\nTakes in 3 parameters, x( the image matrix ), y( the ground truth permutation matrix)
+    returns 2 numpy arrays, corresponding to new_x,new_y , in which there are "number" ( a parameter) of data, each of them shuffled versions of the input imagess
+    
+    Due to nature of permutation learning you can generate anywhere from 10 to 100 times the initial data size without worrying about duplicates.
+    increase augments_per_image to improve differences between each image.
+    Example usage:
+    newx,newy=AugmentedData(x,y,10000,augments_per_image=15)
+    
+    ''')
+
+    print('''4.loadAnImage(path,height,width):\nTakes in 2 parameters, returns a numpy array consisting N*M splitted image. 
     
     Splits the input image into N*M images where each piece has Height of height and Width of width ( parameters).
     Example usage:\nimg=loadAnImage(\"c:/images/puzzles/imageNo1.jpg\",50,50)
     
     ''')
-    print('''3.shuffleAnImage(arr,shuffles):\nTakes in 2 parameters, returns a numpy array. 
+    print('''5.shuffleAnImage(arr,shuffles):\nTakes in 2 parameters, returns a numpy array. 
     
     Shuffles the image pieces of input array for "shuffles" amount of times, and returns it.
     Example usage:\nimg=shuffleAnImag(arr,50)
     
     ''')
-    print('''4.showImgarr(arr,height,width):\nTakes in the array and the final image's height and width as parameter, prints the image version of it. 
+    print('''6.showImgarr(arr,height,width):\nTakes in the array and the final image's height and width as parameter, prints the image version of it. 
     
     used to display the image. pass the output from shuffleAnImage or loadAnImage or any np array resembling it, along with desired
     height and width of the final image.
     Example usage:\nshowImgarr(arr,300,300)
     
     ''')
-    print('''5.createImage(shuffled,P):\nTakes in the shuffled image array and the predictions from the Model(A permutation matrix)
+    print('''7.createImage(shuffled,P):\nTakes in the shuffled image array and the predictions from the Model(A permutation matrix)
     as parameters, returns the final image after reshuffling. 
     
     To see the predicted image , follow the following:
@@ -267,6 +302,16 @@ def helpMe():
     showImgarr(img,height,width)
     
     ''')
+    print('''8.CreateDataset(direc,height,width,extension=".jpg"):\nTakes in 4 parameters, directory under which the images are present, 
+    height of each piece( piece is each puzzle piece not the image) , width of each piece and extension of each image.
+    
+    Generates n folders(n is the number of images), each having the splitted pieces inside it. Cut and paste every folder in a seperate directory to load them
+    using load_images function
+    Example usage:
+    CreateDataset("C:/images/",50,50)
+    
+    ''')
+
 
 
 
