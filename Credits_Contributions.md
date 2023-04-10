@@ -10,7 +10,7 @@
 
   Contributions
 
-  Designing and evalyating models, ideation
+  Designing and evaluating models, ideation
 
 ### Research materials
 ### Data credits
